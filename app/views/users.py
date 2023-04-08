@@ -14,17 +14,34 @@ def user_data(user):
     return jsonify({ 'data': result }), 200
 
 def register():
-    name = request.json['name']
-    email = request.json['email']
-    password = request.json['password']
-    type = request.json['type']
+    request_data = request.get_json()
+
+    name = None
+    email = None
+    password = None
+    type = None
+    tower = None
+    apartment = None
+
+    if 'name' in request_data:
+        name = request_data['name']
+    if 'email' in request_data:
+        email = request_data['email']
+    if 'password' in request_data:
+        password = request_data['password']
+    if 'type' in request_data:
+        type = request_data['type']
+    if 'tower' in request_data:
+        tower = request_data['tower']
+    if 'apartment' in request_data:
+        apartment = request_data['apartment']
 
     user = user_by_email(email)
     if user:
         return jsonify({'message': 'O e-mail informado já está cadastrado', 'data': {}}), 400
 
     password = generate_password_hash(password)
-    user = Users(name, email, password, type)
+    user = Users(name, email, password, type, tower, apartment)
 
     try:
         db.session.add(user)
