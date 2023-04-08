@@ -1,10 +1,14 @@
 from app import app
 from flask import jsonify
-from ..views import users
+from ..views import users, helper
 
 @app.route('/')
 def root():
     return jsonify({'message': 'API - Controle de Entrada'})
+
+@app.route('/auth', methods=['POST'])
+def auth():
+    return helper.auth()
 
 @app.route('/register', methods=['POST'])
 def register():

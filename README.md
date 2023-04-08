@@ -9,3 +9,4 @@ Bibliotecas:
 - flask_marshmallow
 - marshmallow(caso não seja instalado com flask_marshmallow)
 - mysqlclient
+- PyJWT

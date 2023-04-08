@@ -8,7 +8,7 @@ db = SQLAlchemy(app)
 ma = Marshmallow(app)
 
 from .models import users
-from .views import users
+from .views import users, helper
 from .routes import routes
 
 with app.app_context():
