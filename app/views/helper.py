@@ -11,12 +11,12 @@ def token_required(f):
     def decorated(*args, **kwargs):
         token = request.headers.get('token')
         if not token:
-            return jsonify({'message': 'token is missing', 'data': []}), 401
+            return jsonify({ 'message': 'O token de autenticação é obrigatório', 'data': [] }), 401
         try:
             data = jwt.decode(token, app.config['SECRET_KEY'], algorithms=['HS256'])
             current_user = user_by_email(data['email'])
         except:
-            return jsonify({'message': 'token is invalid or expired', 'data': []}), 401
+            return jsonify({'message': 'Token inválido', 'data': []}), 401
         return f(current_user, *args, **kwargs)
     return decorated
 
