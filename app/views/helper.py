@@ -9,12 +9,12 @@ from werkzeug.security import check_password_hash
 def token_required(f):
     @wraps(f)
     def decorated(*args, **kwargs):
-        token = request.args.get('token')
+        token = request.headers.get('token')
         if not token:
             return jsonify({'message': 'token is missing', 'data': []}), 401
         try:
-            data = jwt.decode(token, app.config['SECRET_KEY'])
-            current_user = user_by_email(email=data['email'])
+            data = jwt.decode(token, app.config['SECRET_KEY'], algorithms=['HS256'])
+            current_user = user_by_email(data['email'])
         except:
             return jsonify({'message': 'token is invalid or expired', 'data': []}), 401
         return f(current_user, *args, **kwargs)
@@ -36,8 +36,7 @@ def auth():
         return jsonify({ 'message': 'E-mail não encontrado' }), 401
 
     if user and check_password_hash(user.password, password):
-        token = jwt.encode({ 'email': user.email, 'exp': datetime.datetime.now() + datetime.timedelta(hours=24) }, app.config['SECRET_KEY'])
-        print(token)
+        token = jwt.encode({ 'email': user.email, 'exp': datetime.datetime.now() + datetime.timedelta(hours=24) }, app.config['SECRET_KEY'], algorithm='HS256')
         return jsonify({'message': 'Logado com sucesso', 'token': token,
                         'exp': datetime.datetime.now() + datetime.timedelta(hours=12)})
 

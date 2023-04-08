@@ -13,3 +13,9 @@ def auth():
 @app.route('/register', methods=['POST'])
 def register():
     return users.register()
+
+@app.route('/user-data', methods=['GET'])
+@helper.token_required
+def get_user_data(user):
+    print(user.id)
+    return '123'
