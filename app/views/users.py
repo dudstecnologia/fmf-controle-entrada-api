@@ -9,6 +9,10 @@ def user_by_email(email):
     except:
         return None
 
+def user_data(user):
+    result = user_schema.dump(user)
+    return jsonify({ 'data': result }), 200
+
 def register():
     name = request.json['name']
     email = request.json['email']

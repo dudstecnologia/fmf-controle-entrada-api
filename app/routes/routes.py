@@ -17,5 +17,4 @@ def register():
 @app.route('/user-data', methods=['GET'])
 @helper.token_required
 def get_user_data(user):
-    print(user.id)
-    return '123'
+    return users.user_data(user)
