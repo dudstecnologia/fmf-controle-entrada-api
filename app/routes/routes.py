@@ -18,3 +18,8 @@ def register():
 @helper.token_required
 def get_user_data(user):
     return users.user_data(user)
+
+@app.route('/register-entry', methods=['POST'])
+@helper.token_required
+def register_entry(user):
+    return users.register_entry(user)

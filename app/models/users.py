@@ -11,6 +11,7 @@ class Users(db.Model):
     tower = db.Column(db.String(50), nullable=True)
     apartment = db.Column(db.String(50), nullable=True)
     created_on = db.Column(db.DateTime, default=datetime.datetime.now())
+    registers = db.relationship('Registers', backref='users', lazy=True)
 
     def __init__(self, name, email, password, type, tower, apartment):
         self.name = name
