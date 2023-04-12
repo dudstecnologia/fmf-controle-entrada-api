@@ -1,6 +1,6 @@
 from app import app
 from flask import jsonify
-from ..views import users, helper
+from ..views import users, helper, registers
 
 @app.route('/')
 def root():
@@ -22,4 +22,4 @@ def get_user_data(user):
 @app.route('/register-entry', methods=['POST'])
 @helper.token_required
 def register_entry(user):
-    return users.register_entry(user)
+    return registers.register_entry(user)
